@@ -22,7 +22,6 @@ func _draw():
 
 func _ready():
 	update()
-	pass # Replace with function body.
 
 func draw_stencil(stencil):
 	match stencil:
@@ -54,50 +53,38 @@ func draw_stencil(stencil):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	material.set_shader_param("color", color)
-	update()
-	
-func draw_square_with_cutout(cutoutShape: PoolVector2Array, color):
-	var colors = PoolColorArray([color])
-	var square = PoolVector2Array([vec2(0,0), vec2(100, 0), vec2(100,100), vec2(0, 100)])
-	var square2 = PoolVector2Array([
-		vec2(0,0), vec2(100, 0), vec2(100,100), vec2(0, 100),
-		vec2(0, 75), vec2(75,75), vec2(75,25), vec2(25,25), vec2(25,75), vec2(0,75)
-	])
-	var sq3_len = vec2(14.35534, 85.35534)
-	var d_sq3 = dist(vec2(50,sq3_len.y), vec2(sq3_len.y,50))
-	var d_sq2 = dist(vec2(75,75), vec2(75,25))
-	print('sq3 side len = ', d_sq3)
-	print('sq2 side len = ', d_sq2)
-	if d_sq3 < d_sq2: print('too short')
-	elif d_sq3 > d_sq2: print('too big')
-	else: print('equal')
-	# diamond
-	var square3 = PoolVector2Array([
-		vec2(0,0), vec2(100, 0), vec2(100,100), vec2(0, 100),
-		vec2(0, sq3_len.y), vec2(50,sq3_len.y), vec2(sq3_len.y,50), vec2(50,sq3_len.x), vec2(sq3_len.x,50), vec2(50,sq3_len.y), vec2(0, sq3_len.y)
-	])
-	# circle
-	var nb_points = 12
-	var radius = 10
-	var center = vec2(50,50)
-	var square4 = PoolVector2Array([ ])
-#		vec2(0,0), vec2(100, 0), vec2(100,100), vec2(0, 100),
-#	])
-#	square4.push_back(center)
-#	for i in range(nb_points + 1):
-#		var angle_point = deg2rad(angle_from + i * (angle_to - angle_from) / nb_points - 90)
-#		square4.push_back(center + Vector2(cos(angle_point), sin(angle_point)) * radius * 2)
-	for i in range(nb_points+1):
-		var angle_point = deg2rad(angle_from + i * (angle_to - angle_from) / nb_points - 90)
-		square4.push_back(center + Vector2(cos(angle_point), sin(angle_point)) * radius)
-	draw_polygon(square2, colors)
-	draw_polygon(square4, [Color(0,0,0,1)])
+#	update()
 	
 func draw_sq_w_cutout(shape: PoolVector2Array, color):
 	var colors = PoolColorArray([color])
 	var square = PoolVector2Array([vec2(0,0), vec2(side_length, 0), vec2(side_length,side_length), vec2(0, side_length)])
-	draw_polygon(square, colors)
-	draw_polygon(shape, [Color(0,0,0,1)])
+	var a = Polygon2D.new()
+	a.polygon = square
+	a.color = color
+	a.antialiased = true
+	var b = Polygon2D.new()
+	b.polygon = shape
+	b.color = Color(1,1,1,1.0)
+	b.antialiased = true
+	var res = Geometry.clip_polygons_2d(a.polygon, b.polygon)
+	print(res[0])
+	print(res[1])
+	if Geometry.is_polygon_clockwise(res[0]):
+		print("res 0 is cutout!")
+		draw_polygon(res[0], colors)
+	elif Geometry.is_polygon_clockwise(res[1]):
+		print("res 1 is cutout!")
+		var resPG = Polygon2D.new()
+		resPG.polygon = res[1]
+		resPG.invert_enable = true
+		draw_polygon(resPG, colors)
+	else:
+		draw_polygon(square, colors)
+		draw_polygon(shape, [Color(0,0,0,1)])
+	
+#	draw_polygon(square, colors)
+#	draw_polygon(shape, [Color(0,0,0,1)])
+	
 
 func dist(pt1, pt2): return sqrt(pow(pt2.x - pt1.x,2) + pow(pt2.y - pt1.y,2))
 

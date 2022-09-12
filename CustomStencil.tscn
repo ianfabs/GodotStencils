@@ -13,5 +13,3 @@ shader_param/color = Color( 1, 0, 0, 1 )
 material = SubResource( 2 )
 z_as_relative = false
 script = ExtResource( 1 )
-type = "diamond"
-side_length = 250.0
