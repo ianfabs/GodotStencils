@@ -96,14 +96,14 @@ __meta__ = {
 
 [node name="Stencil" parent="View" instance=ExtResource( 1 )]
 material = SubResource( 4 )
-position = Vector2( 204, 118 )
-z_index = 1
+position = Vector2( 104, 2 )
+z_as_relative = true
 type = "square"
 
 [node name="Stencil2" parent="View" instance=ExtResource( 1 )]
 material = SubResource( 6 )
-position = Vector2( 228, 85 )
-z_index = 2
+position = Vector2( 102, 2 )
+z_as_relative = true
 color = Color( 0, 0.0156863, 1, 1 )
 
 [node name="Stencil3" parent="View" instance=ExtResource( 1 )]
@@ -111,7 +111,6 @@ visible = false
 material = SubResource( 5 )
 position = Vector2( 203, 119 )
 color = Color( 0.0313726, 1, 0, 1 )
-type = "circle"
 
 [connection signal="color_changed" from="UI/Sidebar/ColorPickerButton" to="." method="_on_ColorPickerButton_color_changed"]
 [connection signal="color_changed" from="UI/Sidebar/ColorPickerButton" to="View/Stencil" method="_on_ColorPickerButton_color_changed"]
