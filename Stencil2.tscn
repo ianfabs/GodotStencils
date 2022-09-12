@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Stencil2.gd" type="Script" id=1]
+
+[node name="Stencil" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+visible = false
+polygon = PoolVector2Array( 150, 30, 150, 225, 334, 225, 334, 30, 245, 30, 245, 108, 280, 108, 280, 170, 205, 170, 205, 108, 245, 108, 245, 30 )
+
+[node name="Polygon2D2" type="Polygon2D" parent="."]
+polygon = PoolVector2Array( 150, 30, 150, 225, 334, 225, 334, 30, 280, 108, 280, 170, 205, 170, 205, 108, 280, 108, 334, 30 )
