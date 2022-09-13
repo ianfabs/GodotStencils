@@ -66,17 +66,15 @@ func draw_stencil(stencil):
 			var f = l*fac # multiplying total side len by factor gets right proportion x and y
 			var d = dist(vec2(s,f.x), vec2(f.y,s)) # distance between first two pts in shape
 			var r = d/dnm # r for 'radius' like in the circle calc, but is really just half the dist
+			# TODO: Refine this logic so it can be applied for all three sizes for any dnm
 			if size == 0:
 				s = (s/dnm) + r
 				f = (f/dnm) + vec2(r)
-				$Polygon2D.invert_border = f.x
 			elif size == 1: pass
 			elif size == 2: pass
 			
-#			$Polygon2D.invert_border = l*f.x
 			$Polygon2D.invert_border = f.x
 			var dm = PoolVector2Array([
-#				vec2(s,(l*f.x)), vec2((l*f.y),s), vec2(s,(l*f.y)), vec2((l*f.x),s)
 				vec2(s,f.x), vec2(f.y,s), vec2(s,f.y), vec2(f.x,s)
 			])
 			draw_hole(dm)

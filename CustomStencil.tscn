@@ -10,11 +10,10 @@ __meta__ = {
 "_edit_vertical_guides_": [ 500.0 ]
 }
 type = "diamond"
-size = 0
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 color = Color( 1, 0, 0, 1 )
 antialiased = true
 invert_enable = true
-invert_border = 161.401
-polygon = PoolVector2Array( 250.512, 161.401, 338.901, 250.512, 250.512, 338.901, 161.401, 250.512 )
+invert_border = 71.7766
+polygon = PoolVector2Array( 250, 71.7766, 426.777, 250, 250, 426.777, 71.7766, 250 )
