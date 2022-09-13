@@ -22,11 +22,6 @@ shader_param/vColor = Plane( 0, 0, 0, 1 )
 material = SubResource( 3 )
 size = Vector2( 50, 50 )
 
-[sub_resource type="ShaderMaterial" id=4]
-resource_local_to_scene = true
-shader = ExtResource( 4 )
-shader_param/color = Color( 1, 0, 0, 1 )
-
 [sub_resource type="ShaderMaterial" id=6]
 resource_local_to_scene = true
 shader = ExtResource( 4 )
@@ -36,6 +31,11 @@ shader_param/color = Color( 0, 0.0156863, 1, 1 )
 resource_local_to_scene = true
 shader = ExtResource( 4 )
 shader_param/color = Color( 0.0313726, 1, 0, 1 )
+
+[sub_resource type="ShaderMaterial" id=4]
+resource_local_to_scene = true
+shader = ExtResource( 4 )
+shader_param/color = Color( 1, 0, 0, 1 )
 
 [node name="Stage" type="Node2D"]
 script = ExtResource( 3 )
@@ -49,6 +49,12 @@ margin_left = 1.0
 margin_top = 504.0
 margin_right = 1025.0
 margin_bottom = 600.0
+
+[node name="Stencils" type="HBoxContainer" parent="UI/Footer"]
+margin_left = 25.0
+margin_top = 29.0
+margin_right = 586.0
+margin_bottom = 69.0
 
 [node name="Sidebar" type="Panel" parent="UI"]
 margin_left = 674.0
@@ -82,11 +88,7 @@ focus_mode = 0
 enabled_focus_mode = 0
 text = "Add"
 
-[node name="View" type="CanvasLayer" parent="."]
-layer = 0
-follow_viewport_enable = true
-
-[node name="MeshInstance2D" type="MeshInstance2D" parent="View"]
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
 position = Vector2( 337, 251 )
 scale = Vector2( 13.48, 10 )
 mesh = SubResource( 1 )
@@ -94,24 +96,50 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Stencil" parent="View" instance=ExtResource( 1 )]
+[node name="Stack" type="CanvasLayer" parent="."]
+layer = 0
+follow_viewport_enable = true
+
+[node name="1" parent="Stack" instance=ExtResource( 1 )]
+material = SubResource( 6 )
+position = Vector2( 104, 1 )
+z_as_relative = true
+color = Color( 0.0313726, 1, 0, 1 )
+type = "solid"
+
+[node name="2" parent="Stack" instance=ExtResource( 1 )]
+material = SubResource( 6 )
+position = Vector2( 104, 1 )
+z_as_relative = true
+color = Color( 1, 0.913725, 0, 1 )
+size = 0
+
+[node name="3" parent="Stack" instance=ExtResource( 1 )]
+material = SubResource( 5 )
+position = Vector2( 104, 1 )
+color = Color( 0.0313726, 1, 0, 1 )
+type = "square"
+
+[node name="4" parent="Stack" instance=ExtResource( 1 )]
 material = SubResource( 4 )
 position = Vector2( 104, 2 )
 z_as_relative = true
-type = "square"
+type = "diamond"
 
-[node name="Stencil2" parent="View" instance=ExtResource( 1 )]
+[node name="5" parent="Stack" instance=ExtResource( 1 )]
 material = SubResource( 6 )
-position = Vector2( 102, 2 )
+position = Vector2( 104, 1 )
 z_as_relative = true
 color = Color( 0, 0.0156863, 1, 1 )
+size = 1
 
-[node name="Stencil3" parent="View" instance=ExtResource( 1 )]
-visible = false
-material = SubResource( 5 )
-position = Vector2( 203, 119 )
-color = Color( 0.0313726, 1, 0, 1 )
+[node name="6" parent="Stack" instance=ExtResource( 1 )]
+material = SubResource( 6 )
+position = Vector2( 104, 1 )
+z_as_relative = true
+type = "square"
+size = 0
 
 [connection signal="color_changed" from="UI/Sidebar/ColorPickerButton" to="." method="_on_ColorPickerButton_color_changed"]
-[connection signal="color_changed" from="UI/Sidebar/ColorPickerButton" to="View/Stencil" method="_on_ColorPickerButton_color_changed"]
+[connection signal="color_changed" from="UI/Sidebar/ColorPickerButton" to="Stack/4" method="_on_ColorPickerButton_color_changed"]
 [connection signal="pressed" from="UI/Sidebar/Button" to="." method="_on_Button_pressed"]

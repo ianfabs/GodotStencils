@@ -16,9 +16,13 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
+func _process(delta):
+	stencils = $Stack.get_children()
+	for child in stencils:
+#		var icon = TextureRect.new()
+#		child.side_length = 50
+		$UI/Footer/Stencils.add_child(child)
+		
 
 
 
