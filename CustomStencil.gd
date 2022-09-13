@@ -6,6 +6,8 @@ export (String, "solid", "square", "diamond", "circle") var type = "square"
 export (int, "small", "normal", "big") var size = 1 setget set_size
 export (float) var side_length = 500
 
+export (PackedScene) var button
+
 func set_size(v):
 	size = v
 	property_list_changed_notify()
@@ -22,7 +24,7 @@ var angle_from = 0
 var angle_to = 360
 
 func _draw():
-	$Polygon2D.color = color
+	$Viewport/Polygon2D.color = color
 #	draw_circle_arc(center, radius, angle_from, angle_to, color)
 #	draw_circle_arc_poly(center, radius, angle_from, angle_to, color)
 #	draw_circle_arc( center, radius, angle_from, angle_to, color )
@@ -31,15 +33,16 @@ func _draw():
 	draw_stencil(type)
 
 func _ready():
+	$Sprite.texture = $Viewport.get_texture()
 	draw_stencil(type)
 	update()
 #	pass
 
 func draw_stencil(stencil):
 	if stencil == "solid": 
-		$Polygon2D.invert_enable = false
+		$Viewport/Polygon2D.invert_enable = false
 	else:
-		$Polygon2D.invert_enable = true
+		$Viewport/Polygon2D.invert_enable = true
 	
 	match stencil:
 		"square":
@@ -54,13 +57,13 @@ func draw_stencil(stencil):
 				fq = (l/5)
 			var lq = (l-fq)
 			var d = dist(vec2(fq,0), vec2(lq,0))
-			$Polygon2D.invert_border = (l - d) / 2
+			$Viewport/Polygon2D.invert_border = (l - d) / 2
 			draw_hole(PoolVector2Array([
 				vec2(lq,fq),vec2(fq,fq),vec2(fq,lq),vec2(lq,lq)
 			]))
 		"diamond":
-			var fac = vec2(14.35533/100.0, 85.35533/100.0) # other side factor for point calc
-			var dnm = 2 # denomenator
+			var fac = vec2(14.35534/100.0, 85.35534/100.0) # other side factor for point calc
+			var dnm = 2.0 # denomenator
 			var l = side_length # lenght of outer square side
 			var s = l/dnm # diamond side len
 			var f = l*fac # multiplying total side len by factor gets right proportion x and y
@@ -73,12 +76,16 @@ func draw_stencil(stencil):
 			elif size == 1:
 				# There is some really interesting behavior happening here that I'm not smart enough to explain
 				# I just know it works, don't fuck with it
-				dnm = 1.5
-				s = (l/(dnm*2)) + (d/(dnm*2))
-				f = (f/dnm) + vec2(d/(dnm*2))
-			elif size == 2: pass
+				# gotta figure out how to make the "normal" diamond a little bigger
+				dnm = 3.0
+				s = (l/dnm) + (d/dnm)
+				f = (f/(dnm/2.0)) + vec2(d/dnm)
+			elif size == 2:
+				dnm = 2.0
+				s = (l/dnm) #+ (d/dnm)
+				f = (f/(dnm/2.0)) #+ vec2(d/dnm)
 			
-			$Polygon2D.invert_border = f.x
+			$Viewport/Polygon2D.invert_border = f.x
 			var dm = PoolVector2Array([
 				vec2(s,f.x), vec2(f.y,s), vec2(s,f.y), vec2(f.x,s)
 			])
@@ -94,7 +101,7 @@ func draw_stencil(stencil):
 				inc = 75
 			var radius = (center.x/2)+inc
 			var d = radius*2
-			$Polygon2D.invert_border = (side_length-d)/2.0
+			$Viewport/Polygon2D.invert_border = (side_length-d)/2.0
 			for i in range(nb_points + 1):
 				var angle_point = deg2rad(angle_from + i * (angle_to-angle_from) / nb_points - 90)
 				points_arc.push_back(center + Vector2(cos(angle_point), sin(angle_point)) * radius)
@@ -114,12 +121,13 @@ func draw_stencil(stencil):
 			
 
 func draw_hole(holeShape: PoolVector2Array):
-	$Polygon2D.polygon = holeShape
+	$Viewport/Polygon2D.polygon = holeShape
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 #	material.set_shader_param("color", color)
 	update()
+	$Sprite.texture = $Viewport.get_texture()
 	
 func draw_sq_w_cutout(shape: PoolVector2Array, color):
 	var colors = PoolColorArray([color])
@@ -155,6 +163,13 @@ func get_hex_code():
 	
 	return shapeHex + colorHex
 
+func get_texture(): return $Viewport.get_texture()
+func get_viewport() -> Viewport: return ($Viewport as Viewport)
+func set_button(loc: Control) -> TextureButton:
+	var btn = button.instance()
+	btn.texture_normal = get_texture()
+	loc.add_child(btn)
+	return btn as TextureButton
 
 func _on_ColorPickerButton_color_changed(color):
 	self.color = color

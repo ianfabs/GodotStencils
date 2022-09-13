@@ -12,19 +12,14 @@ var stencils = Array()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
-
+	stencils = $Stack.get_children()
+	stencils[0].set_button($UI/Footer/Stencils)
+#	for stencil in stencils: add_stencil_btn(stencil)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	stencils = $Stack.get_children()
-	for child in stencils:
-#		var icon = TextureRect.new()
-#		child.side_length = 50
-		$UI/Footer/Stencils.add_child(child)
-		
-
-
+	pass
+#	$UI/Footer/Stencils/TextureButton.
 
 func _on_ColorPickerButton_color_changed(color):
 	new_stencil_color = color
@@ -37,3 +32,8 @@ func _on_OptionButton_item_selected(index):
 
 func _on_Button_pressed():
 	stencils.append(stencil.instance())
+
+func add_stencil_btn(stencil):
+	var btn : TextureButton = stencil.get_button().duplicate()
+	$UI/Footer/Stencils.add_child(btn)
+	btn.show()
