@@ -65,12 +65,17 @@ func draw_stencil(stencil):
 			var s = l/dnm # diamond side len
 			var f = l*fac # multiplying total side len by factor gets right proportion x and y
 			var d = dist(vec2(s,f.x), vec2(f.y,s)) # distance between first two pts in shape
-			var r = d/dnm # r for 'radius' like in the circle calc, but is really just half the dist
+			#var r = d/dnm # r for 'radius' like in the circle calc, but is really just half the dist
 			# TODO: Refine this logic so it can be applied for all three sizes for any dnm
 			if size == 0:
-				s = (s/dnm) + r
-				f = (f/dnm) + vec2(r)
-			elif size == 1: pass
+				s = (l/(dnm*2)) + (d/dnm)
+				f = (f/dnm) + vec2(d/dnm)
+			elif size == 1:
+				# There is some really interesting behavior happening here that I'm not smart enough to explain
+				# I just know it works, don't fuck with it
+				dnm = 1.5
+				s = (l/(dnm*2)) + (d/(dnm*2))
+				f = (f/dnm) + vec2(d/(dnm*2))
 			elif size == 2: pass
 			
 			$Polygon2D.invert_border = f.x
