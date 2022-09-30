@@ -145,23 +145,27 @@ func _on_OptionButton_item_selected(index):
 		2: type = "circle"
 
 func get_hex_code():
-	var colorHex = 0x000
-	if color == Color(1,0,0):
-		colorHex = 0x000
-	elif color == Color(0,1,0):
+	var colorHex = 0x010
+	if color == Color(1,0,0): #RED
 		colorHex = 0x010
-	elif color == Color(0,0,1):
+	elif color == Color(0,1,0): #GREEN
 		colorHex = 0x020
-		
-	var shapeHex = 0x000
-	if type == "square":
-		shapeHex = 0x000
-	elif type == "diamond":
+	elif color == Color(0,0,1): #BLUE
+		colorHex = 0x030
+	elif color == Color(1,1,0): #YELLOW
+		colorHex = 0x040
+	else: print('color = ', color)
+	var shapeHex = 0x100
+	if type == "solid":
 		shapeHex = 0x100
-	elif type == "circle":
+	elif type == "square":
 		shapeHex = 0x200
-	
-	return shapeHex + colorHex
+	elif type == "diamond":
+		shapeHex = 0x300
+	elif type == "circle":
+		shapeHex = 0x400
+	var res = shapeHex + colorHex
+	return res
 
 func get_texture(): return $Viewport.get_texture()
 func get_viewport() -> Viewport: return ($Viewport as Viewport)

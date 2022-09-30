@@ -1,5 +1,5 @@
 extends CanvasLayer
-signal change_stencil(typeId)
+signal add_guess(guessCode)
 
 export (PackedScene) var stencil
 
@@ -23,7 +23,7 @@ func _ready():
 	colorPicker.get_picker().add_preset(Color(1,0,0)) #red
 	colorPicker.get_picker().add_preset(Color(0,1,0)) #green
 	colorPicker.get_picker().add_preset(Color(0,0,1)) #blue
-	colorPicker.get_picker().add_preset(Color(1,0.98,0)) #yellow
+	colorPicker.get_picker().add_preset(Color(1,1,0)) #yellow
 	
 	type = "solid"
 	color = colorPicker.color
@@ -45,3 +45,17 @@ func _on_OptionButton_item_selected(index):
 
 func _on_ColorPickerButton_color_changed(color):
 	self.color = color
+
+func _on_AddButton_pressed():
+	var stencil = previewStencil.duplicate()
+	var txRect = TextureRect.new()
+	txRect.texture = stencil.get_texture()
+	txRect.rect_size.x = 50
+	txRect.rect_size.y = 50
+	txRect.expand = true
+	txRect.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	txRect.set_script(ResourceLoader.load("res://tx_rect.gd"))
+	$Footer/GuessStencils.add_child(stencil)
+	$Footer/Guess.add_child(txRect)
+	emit_signal("add_guess", stencil.get_hex_code())
+	
