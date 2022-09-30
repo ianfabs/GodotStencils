@@ -14,7 +14,13 @@ var stencils = Array()
 func _ready():
 	stencils = $Stack.get_children()
 	for stencil in stencils:
-		stencil.set_button($UI/Footer/Stencils)
+		var txRect = TextureRect.new()
+		txRect.texture = stencil.get_texture()
+		txRect.rect_size.x = 50
+		txRect.rect_size.y = 50
+		txRect.expand = true
+		txRect.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		$UI/Footer/Stencils.add_child(txRect)
 #	for stencil in stencils: add_stencil_btn(stencil)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

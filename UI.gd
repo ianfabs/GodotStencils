@@ -23,7 +23,7 @@ func _ready():
 	colorPicker.get_picker().add_preset(Color(1,0,0)) #red
 	colorPicker.get_picker().add_preset(Color(0,1,0)) #green
 	colorPicker.get_picker().add_preset(Color(0,0,1)) #blue
-	colorPicker.get_picker().add_preset(Color(0,0.5,0.5)) #yellow
+	colorPicker.get_picker().add_preset(Color(1,0.98,0)) #yellow
 	
 	type = "solid"
 	color = colorPicker.color
