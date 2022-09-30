@@ -1,0 +1,118 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/Logo.png" type="Texture" id=1]
+[ext_resource path="res://MainMenu.gd" type="Script" id=2]
+
+[sub_resource type="CanvasItemMaterial" id=1]
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource( 1 )
+margin_right = 1031.0
+margin_bottom = 602.0
+color = Color( 0.0509804, 0.0509804, 0.101961, 0.827451 )
+
+[node name="Background" type="VideoPlayer" parent="."]
+visible = false
+margin_right = 1027.0
+margin_bottom = 600.0
+
+[node name="Menu" type="Panel" parent="."]
+margin_left = 250.0
+margin_right = 750.0
+margin_bottom = 600.0
+
+[node name="TextureRect" type="TextureRect" parent="Menu"]
+margin_left = 64.0
+margin_top = 21.0
+margin_right = 429.0
+margin_bottom = 148.0
+texture = ExtResource( 1 )
+expand = true
+
+[node name="Button" type="Button" parent="Menu"]
+margin_left = 120.0
+margin_top = 232.0
+margin_right = 245.0
+margin_bottom = 252.0
+rect_scale = Vector2( 2, 2 )
+text = "New Game"
+flat = true
+
+[node name="Button2" type="Button" parent="Menu"]
+margin_left = 120.0
+margin_top = 274.0
+margin_right = 245.0
+margin_bottom = 294.0
+rect_scale = Vector2( 2, 2 )
+text = "Continue"
+flat = true
+
+[node name="Button3" type="Button" parent="Menu"]
+margin_left = 118.0
+margin_top = 316.0
+margin_right = 243.0
+margin_bottom = 336.0
+rect_scale = Vector2( 2, 2 )
+text = "Settings"
+flat = true
+
+[node name="Quit" type="Button" parent="Menu"]
+margin_left = 121.0
+margin_top = 360.0
+margin_right = 246.0
+margin_bottom = 380.0
+rect_scale = Vector2( 2, 2 )
+text = "Exit"
+flat = true
+
+[node name="ConfirmQuit" type="PopupDialog" parent="."]
+margin_left = 387.0
+margin_top = 182.0
+margin_right = 606.0
+margin_bottom = 321.0
+
+[node name="CenterContainer" type="CenterContainer" parent="ConfirmQuit"]
+margin_right = 217.0
+margin_bottom = 132.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConfirmQuit/CenterContainer"]
+margin_left = 40.0
+margin_top = 38.0
+margin_right = 176.0
+margin_bottom = 93.0
+
+[node name="Label" type="Label" parent="ConfirmQuit/CenterContainer/VBoxContainer"]
+margin_right = 136.0
+margin_bottom = 31.0
+text = "Are you sure 
+you want to quit?"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ConfirmQuit/CenterContainer/VBoxContainer"]
+margin_top = 35.0
+margin_right = 136.0
+margin_bottom = 55.0
+alignment = 1
+
+[node name="Yes" type="Button" parent="ConfirmQuit/CenterContainer/VBoxContainer/HBoxContainer"]
+margin_left = 34.0
+margin_right = 68.0
+margin_bottom = 20.0
+text = "Yes"
+
+[node name="No" type="Button" parent="ConfirmQuit/CenterContainer/VBoxContainer/HBoxContainer"]
+margin_left = 72.0
+margin_right = 102.0
+margin_bottom = 20.0
+text = "No"
+
+[connection signal="pressed" from="Menu/Quit" to="." method="_on_Quit_pressed"]
+[connection signal="pressed" from="ConfirmQuit/CenterContainer/VBoxContainer/HBoxContainer/Yes" to="." method="_on_Confirm_Yes_pressed"]
+[connection signal="pressed" from="ConfirmQuit/CenterContainer/VBoxContainer/HBoxContainer/No" to="." method="_on_Confirm_No_pressed"]

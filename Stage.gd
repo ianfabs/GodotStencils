@@ -10,6 +10,8 @@ var new_stencil_shape
 
 var stencils = Array()
 
+var menuShown = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	stencils = $Stack.get_children()
@@ -25,8 +27,11 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
-#	$UI/Footer/Stencils/TextureButton.
+	if Input.is_action_just_pressed("ui_cancel"):
+		menuShown = !menuShown
+		if menuShown: $Menu/MainMenu.show()
+		else: $Menu/MainMenu.hide()
+		
 
 func _on_OptionButton_item_selected(index):
 	match index:

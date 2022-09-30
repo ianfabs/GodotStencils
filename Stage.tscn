@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://CustomStencil.tscn" type="PackedScene" id=1]
 [ext_resource path="res://UI.gd" type="Script" id=2]
 [ext_resource path="res://Stage.gd" type="Script" id=3]
 [ext_resource path="res://CustomStencil.gdshader" type="Shader" id=4]
 [ext_resource path="res://StencilButton.tscn" type="PackedScene" id=5]
+[ext_resource path="res://MainMenu.tscn" type="PackedScene" id=6]
 
 [sub_resource type="ViewportTexture" id=9]
 viewport_path = NodePath("Stack/1/Viewport")
@@ -158,6 +159,12 @@ position = Vector2( 104, 1 )
 z_as_relative = true
 type = "square"
 size = 2
+
+[node name="Menu" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="MainMenu" parent="Menu" instance=ExtResource( 6 )]
+visible = false
 
 [connection signal="color_changed" from="UI/Sidebar/HBoxContainer/ColorPickerButton" to="UI" method="_on_ColorPickerButton_color_changed"]
 [connection signal="item_selected" from="UI/Sidebar/HBoxContainer/OptionButton" to="UI" method="_on_OptionButton_item_selected"]
