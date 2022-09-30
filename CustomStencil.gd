@@ -170,6 +170,3 @@ func set_button(loc: Control) -> TextureButton:
 	btn.texture_normal = get_texture()
 	loc.add_child(btn)
 	return btn as TextureButton
-
-func _on_ColorPickerButton_color_changed(color):
-	self.color = color

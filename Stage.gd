@@ -13,16 +13,14 @@ var stencils = Array()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	stencils = $Stack.get_children()
-	stencils[0].set_button($UI/Footer/Stencils)
+	for stencil in stencils:
+		stencil.set_button($UI/Footer/Stencils)
 #	for stencil in stencils: add_stencil_btn(stencil)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
 #	$UI/Footer/Stencils/TextureButton.
-
-func _on_ColorPickerButton_color_changed(color):
-	new_stencil_color = color
 
 func _on_OptionButton_item_selected(index):
 	match index:
